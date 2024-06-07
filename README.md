@@ -1,6 +1,6 @@
 # Ansible LEMP Playbook
 
-This repository contains an Ansible playbook and role for setting up a LEMP stack (Linux, Nginx, MySQL, PHP) on your servers.
+This repository contains an Ansible playbook and role for setting up a LEMP stack (Linux, Nginx, MySQL, PHP) along with phpMyAdmin on your servers.
 
 ## Repository Structure
 
