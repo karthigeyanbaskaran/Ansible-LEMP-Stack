@@ -1,0 +1,65 @@
+server {
+    root /usr/share/nginx/html/public; # Path to static directory
+
+    client_max_body_size 100m;
+    index index.html index.htm index.php;
+    charset utf-8;
+
+    # Set Access-Control-Allow-Origin headers
+    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header 'Access-Control-Allow-Methods' '*' always;
+    add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,*' always;
+    add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+
+        # Handle OPTIONS requests for CORS
+        if ($request_method = 'OPTIONS') {
+            add_header 'Content-Length' 0;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            return 200;
+        }
+
+        # Proxy headers if needed
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # Configure proxy timeouts if needed
+        # proxy_connect_timeout 60s;
+        # proxy_read_timeout 60s;
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php8.2-fpm.sock; # php8.2-fpm sock file location
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+        }
+    }
+
+    location /phpmyadmin {
+        root /usr/share;
+        index index.php;
+    }
+
+    location ~ ^/phpmyadmin(.+\.php)$ {
+        root /usr/share;
+        index index.php;
+        fastcgi_read_timeout 300;
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+    }
+
+    location @laravelapi {
+        rewrite /api/(.*)?$ /api/index.php?$is_args$args last;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}

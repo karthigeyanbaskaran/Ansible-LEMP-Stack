@@ -1,0 +1,6 @@
+- name: LEMP Installation
+  become: yes
+  hosts: web01
+  roles: 
+    - LEMP
+    

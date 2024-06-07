@@ -1,0 +1,13 @@
+---
+# handlers file for LEMP
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+    - name: Update package cache
+      apt:
+        update_cache: yes
