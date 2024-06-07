@@ -36,8 +36,10 @@ This repository contains an Ansible playbook and role for setting up a LEMP stac
     all:
       hosts:
         your_server:
-          ansible_host: your.server.ip
-          ansible_user: your_user
+          ansible_host: your IP or DNS
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: key.pem
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     ```
 
 ## Running the Playbook
