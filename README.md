@@ -25,7 +25,7 @@ This repository contains an Ansible playbook and role for setting up a LEMP stac
 
     ```bash
     git clone https://github.com/karthigeyanbaskaran/Ansible-LEMP-Stack.git
-    cd your-repo
+    cd Ansible-LEMP-Stack
     ```
 
 2. **Inventory Configuration**:
