@@ -32,7 +32,7 @@ This repository contains an Ansible playbook and role for setting up a LEMP stac
 
     Edit the `inventory.yml` file to include your target servers.
 
-    ```yaml
+    ```
     all:
       hosts:
         your_server:
@@ -46,8 +46,9 @@ This repository contains an Ansible playbook and role for setting up a LEMP stac
 
 Execute the playbook using the following command:
 
-```bash
+```
 ansible-playbook web.yml
+```
 
 This command will use the `inventory.yml` file to target the specified hosts and run the `web.yml` playbook.
 
